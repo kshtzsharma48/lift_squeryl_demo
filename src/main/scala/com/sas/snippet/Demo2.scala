@@ -11,7 +11,7 @@ import net.liftweb.util.Helpers._
 import scala.xml._
 import java.util.Date
 import net.liftweb.http.js.JE.JsRaw
-import com.sas.comet.TodoItem
+import net.liftweb.http.js.JE.JsVar
 
 case class TodoItem(val id: Int, val label: String, var complete: Boolean)
 
@@ -30,6 +30,11 @@ class Demo2 extends Loggable {
     logger.info("Item %s changed".format(item.label))
     ToggleClass("#" + labelID, "complete")
   }
+  
+  def clientFunction =  Script(Function("fname", List("arg1", "arg2"),
+      JsRaw("var args = arg1 + ':' + arg2;") &
+      // ajaxCall returns a (funcid, jscript) tuple...we only need the jscript part
+        SHtml.ajaxCall(JsVar("args"), (s: String) => logger.info("Got client callback with " + s))._2))
 
   // Transform the segment of the template using CSS selectors
   def todoList =

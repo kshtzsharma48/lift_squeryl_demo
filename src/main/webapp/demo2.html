@@ -17,7 +17,14 @@
   </head_merge>
 
   <div class="lift:Demo2.todoList">
-   <ul id="todo">
+   <span class="lift:Demo2.clientFunction"> <script type="text/javascript">
+				// <![CDATA[
+				function fname(a, b) {
+					alert("Placeholder called");
+				}
+				// ]]?>
+			</script>
+   </span> <a href="#" onclick="fname(1,2)">Click me to call the server</a><ul id="todo">
     <li class="item todo"><input type="checkbox" class="done"></input><span class="label">The item</span></li>
     <li class="clearable todo"><input type="checkbox" class="done"></input><span class="label">The item</span></li>
     <li class="clearable todo"><input type="checkbox" checked class="done"></input><span class="label complete">The item</span></li>
