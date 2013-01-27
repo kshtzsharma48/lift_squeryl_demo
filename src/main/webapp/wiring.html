@@ -16,17 +16,17 @@
 		<link href="/static/css/other.css" type="text/css" rel="stylesheet"></link>
 		</head_merge>
 
-		<div class="lift:Demo2.todoList">
-			<span class="lift:Demo2.clientFunction"> <script
-					type="text/javascript">
-				//          
-				function fname(a, b) {
-					alert("Placeholder called");
-				}
-				// ]]?>
-			</script>
-			
-			</span> <a href="#" onclick="fname(1,2)">Click me to call the server</a>
+		<div class="lift:WiringDemo.todoList">
+			<p>
+				My cash on hand
+				<input type="text" id="cash_input"></input>
+			</p>
+
+			<div style="width: 300px; float: right; clear: both;">
+				My wallet originally contained <span class="cash_on_hand"></span>,
+				but when I get paid the $<span class="money">0</span>, I'll have $<span
+					class="projected_money">0</span>.
+			</div>
 
 			<ul id="todo">
 				<li class="item todo">
@@ -42,6 +42,10 @@
 					<span class="label complete">The item</span>
 				</li>
 			</ul>
+			<p>
+				You have completed <span class="items_checked">0</span> tasks, and
+				as a result have earned $<span class="money">0</span>.
+			</p>
 		</div>
 
 		<!-- END ACTUAL PAGE CONTENT -->

@@ -14,17 +14,7 @@ import net.liftweb.http.js.JE.JsRaw
 import net.liftweb.http.js.JE.JsVar
 import net.liftweb.http.js.jquery.JqWiringSupport
 
-case class TodoItem(val id: Int, val label: String, var complete: Boolean)
-
-object Database {
-  val items = List(
-    TodoItem(1, "Fix dinner", false),
-    TodoItem(2, "Smash pumpkins", false),
-    TodoItem(3, "Grind oats", false),
-    TodoItem(4, "Slather things", false))
-}
-
-class Demo2 extends Loggable {
+class WiringDemo extends Loggable {
   val numberOfItemsChecked = ValueCell(Database.items.count(_.complete))
   val cashOnHand = ValueCell(12)
   val moneyEarnedPerItem = 6
@@ -37,16 +27,16 @@ class Demo2 extends Loggable {
     val labelID = "#label_%d".format(item.id)
     item.complete = b
     logger.info("Item %s changed".format(item.label))
+    numberOfItemsChecked.set(Database.items.count(_.complete))
     ToggleClass(labelID, "complete")
   }
 
-  def clientFunction = Script(Function("fname", List("arg1", "arg2"),
-    JsRaw("var args = arg1 + ':' + arg2;") &
-      // ajaxCall returns a (funcid, jscript) tuple...we only need the jscript part
-      SHtml.ajaxCall(JsVar("args"), (s: String) => logger.info("Got client callback with " + s))._2))
-
-  // Transform the segment of the template using CSS selectors
   def todoList =
+    "#cash_input" #> SHtml.ajaxText(cashOnHand.get.toString, (str) => { cashOnHand.set(str.toInt); Noop }) &
+      ".items_checked" #> WiringUI.asText(numberOfItemsChecked, JqWiringSupport.fade) &
+      ".cash_on_hand" #> WiringUI.asText(cashOnHand, JqWiringSupport.fade) &
+      ".money" #> WiringUI.asText(moneyEarned, JqWiringSupport.fade) &
+      ".projected_money" #> WiringUI.asText(projectedMoney, JqWiringSupport.fade) &
       ".item *" #> Database.items.map(item => {
         val labelID = "label_%d".format(item.id)
         ".done" #> SHtml.ajaxCheckbox(item.complete, itemChanged(item, _)) &
@@ -55,7 +45,4 @@ class Demo2 extends Loggable {
           ".label [class+]" #> (if (item.complete) "complete" else "")
       }) &
       ClearClearable
-
-  // Or transform the node sequence direction (or simple return a new one to replace it, as this does)
-  def currentTime(n: NodeSeq): NodeSeq = <span class="time">{ new Date().toString }</span>
 }
