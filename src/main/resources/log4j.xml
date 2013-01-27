@@ -10,7 +10,7 @@
 		<priority value="info" />
 	</category>
 	<category name="bootstrap.liftweb">
-		<priority value="debug" />
+		<priority value="info" />
 	</category>
 	<root>
 		<priority value="info" />

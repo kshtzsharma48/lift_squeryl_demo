@@ -12,16 +12,8 @@ import scala.xml._
 import java.util.Date
 import net.liftweb.http.js.JE.JsRaw
 import net.liftweb.actor.LiftActor
-
-case class TodoItem(val id: Int, val label: String, var complete: Boolean)
-
-object Demo3 { // pretend database that is shared globally
-  val items = List(
-    TodoItem(1, "Fix dinner", false),
-    TodoItem(2, "Smash pumpkins", false),
-    TodoItem(3, "Grind oats", false),
-    TodoItem(4, "Slather things", false))
-}
+import com.sas.snippet.TodoItem
+import com.sas.snippet.Database
 
 // The hub where events arrive, and are sent out to the comet actors
 object Demo3MessageHub extends LiftActor with ListenerManager {
@@ -62,7 +54,7 @@ class Demo3 extends CometActor with Loggable with CometListener {
 
   // Transform the segment of the template using CSS selectors
   def render =
-    ".item *" #> Demo3.items.map(item => {
+    ".item *" #> Database.items.map(item => {
       val labelID = "label_%d".format(item.id)
       ".done" #> SHtml.ajaxCheckbox(item.complete, itemChanged(item, _)) &
         ".label *" #> item.label &
@@ -70,7 +62,4 @@ class Demo3 extends CometActor with Loggable with CometListener {
         ".label [id]" #> labelID
     }) &
       ClearClearable
-
-  // Or transform the node sequence direction (or simple return a new one to replace it, as this does)
-  def currentTime(n: NodeSeq): NodeSeq = <span class="time">{ new Date().toString }</span>
 }

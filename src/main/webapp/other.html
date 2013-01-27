@@ -7,14 +7,48 @@
 <title>Home</title>
 </head>
 <body class="lift:content_id=main">
- <div id="main" class="lift:surround?with=default;at=content">
-  <!-- BEGIN ACTUAL PAGE CONTENT -->
+	<div id="main" class="lift:surround?with=default;at=content">
+		<!-- BEGIN ACTUAL PAGE CONTENT -->
 
-  <p>
-   Some other page
-  </p>
-  <!-- END ACTUAL PAGE CONTENT -->
- </div>
+		<div class="lift:Comet?type=Clock">
+			<span class="time">5:43:22 pm</span>
+		</div>
+
+		<div class="lift:Demo4.search">
+			Search String:
+			<input type="text" class="query_field"></input>
+			<br />
+			<div id="results"></div>
+		</div>
+
+		<div class="lift:Demo2.todoList">
+			<span class="lift:Demo2.clientFunction"> <script
+					type="text/javascript">
+				//          
+				function fname(a, b) {
+					alert("Placeholder called");
+				}
+				// ]]?>
+			</script>
+			</span> <a href="#" onclick="fname(1,2)">Click me to call the server</a>
+			<ul id="todo">
+				<li class="item todo">
+					<input type="checkbox" class="done"></input>
+					<span class="label">The item</span>
+				</li>
+				<li class="clearable todo">
+					<input type="checkbox" class="done"></input>
+					<span class="label">The item</span>
+				</li>
+				<li class="clearable todo">
+					<input type="checkbox" checked class="done"></input>
+					<span class="label complete">The item</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- END ACTUAL PAGE CONTENT -->
+	</div>
 </body>
 </html>
 
