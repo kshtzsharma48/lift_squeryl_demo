@@ -8,24 +8,37 @@
 <title>Home</title>
 </head>
 <body class="lift:content_id=main">
- <div id="main" class="lift:surround?with=default;at=content">
-  <!-- BEGIN ACTUAL PAGE CONTENT -->
+	<div id="main" class="lift:surround?with=default;at=content">
+		<!-- BEGIN ACTUAL PAGE CONTENT -->
 
-  <!-- Anything you put in head_merge will end up in the real head of the template, and duplicates will be fixed. JQuery is already available from the toolkit itself. -->
-  <head_merge>
-  <link href="/static/css/other.css" type="text/css" rel="stylesheet"></link>
-  </head_merge>
+		<!-- Anything you put in head_merge will end up in the real head of the template, and duplicates will be fixed. JQuery is already available from the toolkit itself. -->
+		<head_merge>
+		<link href="/static/css/other.css" type="text/css" rel="stylesheet"></link>
+		</head_merge>
 
-  <div class="lift:Comet?type=Demo3">
-   <ul id="todo">
-    <li class="item todo"><input type="checkbox" class="done"></input><span class="label">The item</span></li>
-    <li class="clearable todo"><input type="checkbox" class="done"></input><span class="label">The item</span></li>
-    <li class="clearable todo"><input type="checkbox" checked class="done"></input><span class="label complete">The item</span></li>
-   </ul>
-  </div>
+		<div class="lift:Comet?type=Clock">
+			<span class="time">5:43:22 pm</span>
+		</div>
 
-  <!-- END ACTUAL PAGE CONTENT -->
- </div>
+		<div class="lift:Comet?type=Demo3">
+			<ul id="todo">
+				<li class="item todo">
+					<input type="checkbox" class="done"></input>
+					<span class="label">The item</span>
+				</li>
+				<li class="clearable todo">
+					<input type="checkbox" class="done"></input>
+					<span class="label">The item</span>
+				</li>
+				<li class="clearable todo">
+					<input type="checkbox" checked class="done"></input>
+					<span class="label complete">The item</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- END ACTUAL PAGE CONTENT -->
+	</div>
 </body>
 </html>
 
