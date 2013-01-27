@@ -10,9 +10,8 @@ import net.liftweb.util._
 import net.liftweb.util.Helpers._
 import scala.xml._
 import java.util.Date
-import net.liftweb.http.js.JE.JsRaw
-import net.liftweb.http.js.JE.JsVar
 import net.liftweb.http.js.jquery.JqWiringSupport
+import net.liftweb.http.js.JE.JsRaw
 
 class WiringDemo extends Loggable {
   val numberOfItemsChecked = ValueCell(Database.items.count(_.complete))
@@ -31,18 +30,21 @@ class WiringDemo extends Loggable {
     ToggleClass(labelID, "complete")
   }
 
-  def todoList =
+  def itemsXform =
+    ".item" #> Database.items.map(item => {
+      val labelID = "label_%d".format(item.id)
+      ".done" #> SHtml.ajaxCheckbox(item.complete, itemChanged(item, _)) &
+        ".label *" #> item.label &
+        ".label [id]" #> labelID &
+        ".label [class+]" #> (if (item.complete) "complete" else "")
+    })
+
+  def todoList = wiredXform & itemsXform & ClearClearable
+
+  def wiredXform: CssSel =
     "#cash_input" #> SHtml.ajaxText(cashOnHand.get.toString, (str) => { cashOnHand.set(str.toInt); Noop }) &
       ".items_checked" #> WiringUI.asText(numberOfItemsChecked, JqWiringSupport.fade) &
       ".cash_on_hand" #> WiringUI.asText(cashOnHand, JqWiringSupport.fade) &
       ".money" #> WiringUI.asText(moneyEarned, JqWiringSupport.fade) &
-      ".projected_money" #> WiringUI.asText(projectedMoney, JqWiringSupport.fade) &
-      ".item *" #> Database.items.map(item => {
-        val labelID = "label_%d".format(item.id)
-        ".done" #> SHtml.ajaxCheckbox(item.complete, itemChanged(item, _)) &
-          ".label *" #> item.label &
-          ".label [id]" #> labelID &
-          ".label [class+]" #> (if (item.complete) "complete" else "")
-      }) &
-      ClearClearable
+      ".projected_money" #> WiringUI.asText(projectedMoney, JqWiringSupport.fade)
 }

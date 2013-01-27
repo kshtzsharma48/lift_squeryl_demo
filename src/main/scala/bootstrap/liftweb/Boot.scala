@@ -33,8 +33,8 @@ class Boot extends Loggable {
       Menu.i("Demo 2 (AJAX)") / "demo2",
       Menu.i("Demo 3 (Comet)") / "demo3",
       Menu.i("Demo 4 (Conversational Search)") / "demo4",
-      Menu.i("Seamless Combo") / "other",
-      Menu.i("Wiring") / "wiring",
+      Menu.i("Demo 5 (Wiring)") / "wiring",
+      Menu.i("Demo 6 (Seamless Combo)") / "other",
       Menu.i("Static") / "static" / ** >> Hidden)
 
     // set the sitemap.  Note if you don't want access control or a generated menu for
