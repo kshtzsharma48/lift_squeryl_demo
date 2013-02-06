@@ -2,6 +2,7 @@ package bootstrap.liftweb
 
 import net.liftweb._
 import org.squeryl.SessionFactory
+import org.squeryl.adapters.PostgreSqlAdapter
 import org.squeryl.Session
 import util._
 import Helpers._
@@ -23,6 +24,32 @@ import net.liftmodules.widgets.tablesorter.TableSorter
  * This class is loaded by Lift, and the boot method is called to configure the app. It is called once and only once.
  */
 class Boot extends Loggable {
+  def initializeDatabase {
+    Class.forName("org.postgresql.Driver"); // load postgres driver
+    // create a c3p0 connection pool
+    val pool = new ComboPooledDataSource
+    pool.setDriverClass("org.postgresql.Driver");
+    pool.setJdbcUrl("jdbc:postgresql:demo")
+    pool.setUser("test")
+    pool.setPassword("")
+
+    pool.setMinPoolSize(2)
+    pool.setAcquireIncrement(5)
+    pool.setMaxPoolSize(10)
+    pool.setTestConnectionOnCheckout(true);
+    pool.setAutomaticTestTable("test_connection_status");
+
+    SessionFactory.concreteFactory = Some(() => {
+      val session = Session.create(pool.getConnection, new PostgreSqlAdapter)
+      session.setLogger(logger.debug(_))
+      session
+    })
+    LiftRules.unloadHooks.append(() => {
+      SessionFactory.concreteFactory = None
+      pool.close
+      java.sql.DriverManager.deregisterDriver(java.sql.DriverManager.getDriver("org.postgresql.Driver"))
+    })
+  }
   def boot {
     // where to search for snippets, comet, etc (lift:xxx classes in HTML)
     LiftRules.addToPackages("com.sas")

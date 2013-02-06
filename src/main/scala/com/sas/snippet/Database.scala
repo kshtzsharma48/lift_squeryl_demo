@@ -1,5 +1,6 @@
 package com.sas.snippet
 
+// A simple in-memory database 
 case class TodoItem(val id: Int, val label: String, var complete: Boolean)
 
 object Database {
