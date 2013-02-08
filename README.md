@@ -51,8 +51,9 @@ The basic list of things to install:
 - Import your project (or this template project) as an Existing Maven Project.
 - Open the Servers view
 - Add a tomcat 6 server
-- Right-click on the tomcat server, add Add/Remove
-- Add this webapp
+- Double-click on the server, and check: Jrebel agent, serve without publishing, and never publish automatically.
+- Right-click on the tomcat server, add Add/Remove Projects
+- Add your webapp
 - Press Run or Debug in the Servers tab
 - Go to http://localhost:8080/nameofyourapp
 - Edit, Save, Reload!
