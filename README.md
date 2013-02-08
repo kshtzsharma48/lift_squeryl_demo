@@ -26,8 +26,11 @@ I suggest eclipse.ini to include more RAM in the JVM args (the items below are
 good if you have 4GB or more):
 
    -XX:MaxPermSize=512m
+
    -Xss2M
+
    -Xms1024m
+
    -Xmx2048m
 
 Add these after the -vmargs line.
