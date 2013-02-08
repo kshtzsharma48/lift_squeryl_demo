@@ -29,8 +29,8 @@ class Boot extends Loggable {
     // create a c3p0 connection pool
     val pool = new ComboPooledDataSource
     pool.setDriverClass("org.postgresql.Driver");
-    pool.setJdbcUrl("jdbc:postgresql:demo")
-    pool.setUser("test")
+    pool.setJdbcUrl("jdbc:postgresql://localhost/demo")
+    pool.setUser("tonykay")
     pool.setPassword("")
 
     pool.setMinPoolSize(2)
@@ -41,9 +41,18 @@ class Boot extends Loggable {
 
     SessionFactory.concreteFactory = Some(() => {
       val session = Session.create(pool.getConnection, new PostgreSqlAdapter)
-      session.setLogger(logger.debug(_))
+      session.setLogger(logger.info(_))
       session
     })
+    
+    S.addAround(new LoanWrapper {
+      override def apply[T](f: => T): T = {
+        inTransaction {
+          f
+        }
+      }
+    })
+
     LiftRules.unloadHooks.append(() => {
       SessionFactory.concreteFactory = None
       pool.close
@@ -51,6 +60,8 @@ class Boot extends Loggable {
     })
   }
   def boot {
+    initializeDatabase
+    
     // where to search for snippets, comet, etc (lift:xxx classes in HTML)
     LiftRules.addToPackages("com.sas")
 
@@ -62,6 +73,7 @@ class Boot extends Loggable {
       Menu.i("Demo 4 (Conversational Search)") / "demo4",
       Menu.i("Demo 5 (Wiring)") / "wiring",
       Menu.i("Demo 6 (Seamless Combo)") / "other",
+      Menu.i("Squeryl") / "squeryl",
       Menu.i("Static") / "static" / ** >> Hidden)
 
     // set the sitemap.  Note if you don't want access control or a generated menu for
