@@ -1,16 +1,16 @@
 lift_squeryl_demo
 =================
 
-A project demonstrating some simple Lift and SQeuryL.
+A project demonstrating some simple Lift and Sqeuryl.
 
 This project uses a pom.xml file that should work well as a basis for 
 maven-driven lift projects that want to use all of eclipse's web
 tools platform features (including the servers tab)
 
 This pom.xml file works perfectly at the command line, and if you
-have the proper eclipse plugins, it will integrate perfectly with
-the scala IDE, the web tools platform server support (I have only
-tried Tomcat YMMV), JRebel reloading of classes on save, etc.
+have the proper eclipse plugins it will import perfectly with
+the scala IDE, and will allow the web tools platform server support (I have
+only tried Tomcat YMMV), JRebel reloading of classes on save, etc.
 
 I use this basic template to do full-blown Liftweb developement,
 and am quite pleased with it. You never need a command line,
